@@ -1,0 +1,6 @@
+fun func (f:int->int):int => (f 1) ;
+let
+    f = fn(x:int): bool=>x LESSTHAN 5
+in
+    (func f)
+end;

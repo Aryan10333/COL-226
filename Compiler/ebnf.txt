@@ -1,0 +1,55 @@
+program :: statement program | statement
+
+statement ::= exp TERM.
+
+exp ::= bin_exp | fun_app_exp | fun_exp.
+
+fun_exp ::= FUN ID LPAREN ID COLON typ RPAREN COLON typ GOES_TO exp. 
+
+fun_app_exp ::= LPAREN ID exp RPAREN.
+
+bin_exp ::= if non_if_exp then non_if_exp else bin_exp fi | 
+	    non_if_exp.
+  	  
+non_if_exp ::= non_imply_exp IMPLIES non_if_exp | 
+		    non_imply_exp.
+  	  
+non_imply_exp ::= non_imply_exp AND non_and_exp | 
+		       non_imply_exp OR non_and_exp | 
+		       non_imply_exp XOR non_and_exp | 
+		       non_and_exp.
+	  
+non_and_exp ::= NOT non_op_exp | 
+		     non_op_exp.
+  	  
+non_op_exp ::= let_exp | arithmetic_exp | comp_exp | bin_const.
+
+bin_const ::= BIN_TRUE | BIN_FALSE.
+
+let_exp ::= let decl in exp.
+
+decl ::= ID ASSIGN exp | ID ASSIGN fn_exp.
+
+fn_exp ::= FN LPAREN ID COLON typ RPAREN COLON typ GOES_TO exp.
+
+typ ::= non_arrow_typ ARROW typ | non_arrow_typ.
+
+non_arrow_typ ::= INT | BOOL | LPAREN typ RPAREN.
+
+comp_exp ::= arithmetic_exp LESSTHAN arithmetic_exp |
+	      arithmetic_exp EQUALS arithmetic_exp | 
+	      arithmetic_exp GREATERTHAN arithmetic_exp. 
+
+arithmetic_exp ::= arithmetic_exp MINUS non_sub_exp |
+		    non_sub_exp.
+		    
+non_sub_exp ::= non_sub_exp PLUS non_plus_exp | 
+		 non_plus_exp.
+
+non_plus_exp ::= non_plus_exp TIMES non_times_exp |
+		  non_times_exp.
+
+non_times_exp ::= NEGATE non_times_exp |
+		   non_exp.
+
+non_exp ::= CONST | ID | LPAREN exp RPAREN.

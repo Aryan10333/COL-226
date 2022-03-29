@@ -1,0 +1,5 @@
+let x = TRUE in 
+   let y = 5 in 
+      if x then y EQUALS 5 else y PLUS 1 fi
+   end
+end;
